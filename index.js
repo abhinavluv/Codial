@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = 9000;
 
+//Use express router from routes/index.js
+app.use('/', require('./routes'));
+
 app.listen(port, function(error) {
    if(error) {
        console.log("Unable to connect to server...");
