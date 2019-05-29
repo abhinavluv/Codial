@@ -1,3 +1,7 @@
 module.exports.practice = function(request, response) {
-    return response.end("<h2>Practice controller</h2>");
+    return response.end("<h1>Practice controller</h1>");
+};
+
+module.exports.practiceHome = function(request, response) {
+    return response.end("<h1>Practice Home Page!!!</h1>");
 };
