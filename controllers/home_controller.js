@@ -1,3 +1,6 @@
 module.exports.home = function(request, response) {
-    return response.end("<h1>Express is up for Codial...</h1>");
+    context = {
+        title: 'Codial Home Page'
+    };
+    return response.render('home', context);
 };
