@@ -9,7 +9,7 @@ const user_schema = new mongoose.Schema({
        type: String,
        required: true
     },
-    name: {
+    userName: {
        type: String,
        required: true,
     }
@@ -18,5 +18,5 @@ const user_schema = new mongoose.Schema({
     timestamps: true
 });
 
-const User = mongoose.Model('User', user_schema);
+const User = mongoose.model('User', user_schema);
 module.exports = User;
