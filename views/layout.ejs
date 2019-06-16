@@ -6,6 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <%- style %>
     <title>
         <%= title %>
@@ -15,7 +17,9 @@
 
 <%- include('_header'); -%>
 
-<%- body -%>
+<main id="layout-main">
+    <%- body -%>
+</main>
 
 <%- include('_footer'); -%>
 

@@ -17,6 +17,9 @@ module.exports.posts = function(request, response) {
 
 // render sign-up page
 module.exports.signup = function(request, response) {
+    if(request.isAuthenticated()) {
+        return response.redirect('/users/profile');
+    }
     context = {
         'title': 'Codial User | Sign Up'
     };
@@ -25,6 +28,9 @@ module.exports.signup = function(request, response) {
 
 // render sign-in page
 module.exports.signin = function(request, response) {
+    if(request.isAuthenticated()) {
+        return response.redirect('/users/profile');
+    }
   context = {
       'title': 'Codial User | Sign In'
   };
@@ -67,5 +73,10 @@ module.exports.create = function(request, response) {
 
 // sign-in functionality & create a session for the user
 module.exports.createSession = function(request, response) {
-//    todo
+    return response.redirect('/');
 };
+
+module.exports.destroySession = function(request, response) {
+    request.logout();
+    return response.redirect('/');
+}
