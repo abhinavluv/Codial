@@ -5,28 +5,31 @@
     <h1>This is Codial > <%= title %></h1>
 
         <section id="feed-posts">
-            <h4>Posts</h4>
-            <form action="/posts/create" id="new-post-form" method="post">
-                <label for="post-content"></label>
-                <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Post Content Goes Here..."></textarea>
 
-                <input type="submit" value="Post">
-            </form>
+            <% if(locals.user) { %>
+                <h4>Posts</h4>
+                <form action="/posts/create" id="new-post-form" method="post">
+                    <label for="post-content"></label>
+                    <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Post Content Goes Here..."></textarea>
 
-            <div id="post-list-container">
-                <ul>
-                    <% for(post of posts) { %>
-                        <p>
-                            <li>
-                                <%= post.content %>
-                                <br>
-                                <small>
-                                    <%= post.user.userName %>
-                                </small>
-                            </li>
-                        </p>
-                    <% } %>
-                </ul>
-            </div>
+                    <input type="submit" value="Post">
+                </form>
+
+                <div id="post-list-container">
+                    <ul>
+                        <% for(post of posts) { %>
+                            <p>
+                                <li>
+                                    <%= post.content %>
+                                    <br>
+                                    <small>
+                                        <%= post.user.userName %>
+                                    </small>
+                                </li>
+                            </p>
+                        <% } %>
+                    </ul>
+                </div>
+            <% } %>
         </section>
 
