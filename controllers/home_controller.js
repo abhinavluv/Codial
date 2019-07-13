@@ -16,7 +16,15 @@ module.exports.home = function(request, response) {
     });*/
 
     // the below function till populate('user') finds all the post and populates user of each post
-    Post.find({}).populate('user').exec(function(error, posts) {
+    Post.find({})
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        })
+        .exec(function(error, posts) {
         context = {
             title: 'Codial | Home Page',
             posts: posts
