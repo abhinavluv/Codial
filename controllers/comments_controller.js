@@ -19,3 +19,19 @@ module.exports.createComment = function(request, response) {
      }
   });
 };
+
+module.exports.deleteComment = function(request, response) {
+  Comment.findById(request.params.id, function(error, comment) {
+     if(comment.user.toString() === request.user.id) {
+         let postId = comment.post.toString();
+         comment.remove();
+         // below line pulls out the comments from the post using $pull and delete the comment with the id
+         Post.findByIdAndUpdate(postId, { $pull: { comments: request.params.id } }, function(error, post) {
+            return response.redirect('back');
+         });
+     }
+     else {
+         return response.redirect('back');
+     }
+  });
+};

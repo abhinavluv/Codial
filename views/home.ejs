@@ -1,13 +1,14 @@
 
 
-        <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/home.css">
 
     <h1>This is Codial > <%= title %></h1>
 
+    <div id="home-container">
         <section id="feed-posts">
 
 
-                <h4>Posts</h4>
+            <h4>Posts</h4>
             <% if(locals.user) { %>
                 <form action="/posts/create" id="new-post-form" method="post">
                     <label for="post-content"></label>
@@ -17,46 +18,25 @@
                 </form>
             <% } %>
 
-                <div id="post-list-container">
-                    <ul>
-                        <% for(post of posts) { %>
-                            <li>
-                                <p>
-                                    <%= post.content %>
-                                    <br>
-                                    <small>
-                                        <%= post.user.userName %>
-                                    </small>
-                                </p>
-                                <div class="post-comments">
-                                    <% if(locals.user) { %>
-                                        <form action="/comments/createComment" method="post">
-                                            <input type="text" name="comment-content" placeholder="Comments..." required>
-                                            <input type="hidden" name="post" value="<%= post._id %>">
-                                            <input type="submit" value="Post Comment">
-                                        </form>
-                                    <% } %>
+            <div id="post-list-container">
+                <ul>
+                    <% for(post of posts) { %>
 
-                                    <div class="post-comments-list">
-                                        <ul id="<%= post._id %>">
-                                            <% for(comment of post.comments) { %>
-                                                <p>
-                                                    <%= comment.content %>
-                                                </p>
+                        <%- include('_post'); -%>
 
-                                                <small>
-                                                    <%= comment.user.userName %>
-                                                </small>
-
-                                            <% } %>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-
-                        <% } %>
-                    </ul>
-                </div>
+                    <% } %>
+                </ul>
+            </div>
 
         </section>
+
+        <section id="user-friends">
+            <h4>Friends</h4>
+            <% for(each_user of all_users) { %>
+                <p>
+                    <a href="/users/profile/<%= each_user.id %>"><%= each_user.userName %></a>
+                </p>
+            <% } %>
+        </section>
+    </div>
 

@@ -3,6 +3,24 @@
 <link rel="stylesheet" href="/css/users_profile.css">
 
     <h1>This is Codial / Profile Page</h1>
-    <p>Bello, <%= user.userName %></p>
-    <p><%= user.email %></p>
+
+
+    <% if(user.id == profile_user.id) { %>
+        <p>Bello, <%= profile_user.userName %></p>
+        <p><%= profile_user.email %></p>
+        <!-- If logged-in user matches userid for whom profile is being fetched, then show the update form -->
+        <form action="/users/update/<%= profile_user.id %>" method="post">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Update your name..." value="<%= profile_user.userName %>" required>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="Update your email..." value="<%= profile_user.email %>" required>
+
+            <input type="submit" value="Update">
+        </form>
+    <% } else { %>
+        <!-- else show only the profile info -->
+        <p>Bello, <%= profile_user.userName %></p>
+        <p><%= profile_user.email %></p>
+    <% } %>
 

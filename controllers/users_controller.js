@@ -5,10 +5,27 @@ module.exports.home = function(request, response) {
 };
 
 module.exports.profile = function(request, response) {
-    context = {
-        'title': "User's Profile"
-    };
-    return response.render('users_profile', context);
+    User.findById(request.params.id, function(error, user) {
+        context = {
+            title: "User's Profile",
+            profile_user: user
+        };
+        return response.render('users_profile', context);
+    });
+};
+
+module.exports.updateProfile = function(request, response) {
+    console.log("Request.user.id: " + request.user.id + ' ' + typeof (request.user.id));
+    console.log("Request.params.id: " + request.params.id + ' ' + typeof (request.params.id));
+    console.log("Request.body.userName: " + request.body + ' ' + typeof (request.body));
+  if(request.user.id === request.params.id) {
+      User.findByIdAndUpdate(request.params.id, { $set: { userName: request.body.name, email:  request.body.email } }, function(error, user) {
+         return response.redirect('back');
+      });
+  }
+  else {
+      return response.status(401).send('Unauthorised');
+  }
 };
 
 module.exports.posts = function(request, response) {

@@ -5,7 +5,8 @@ const passport = require('passport');
 
 router.get('/', usersController.home);
 // let user access profile page, only if logged in. This is being checked in checkAuthentication function in passport-local-strategy
-router.get('/profile', passport.checkAuthentication, usersController.profile);
+router.get('/profile/:id', passport.checkAuthentication, usersController.profile);
+router.post('/update/:id', passport.checkAuthentication, usersController.updateProfile);
 router.get('/posts', usersController.posts);
 router.get('/signup', usersController.signup);
 router.get('/signin', usersController.signin);

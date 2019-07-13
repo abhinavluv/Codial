@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // provide a connection to codial_development database
-mongoose.connect('mongodb://localhost/codial_development');
+mongoose.connect('mongodb://localhost/codial_development', { useFindAndModify: false });
 
 // setting up the database
 const db = mongoose.connection;
