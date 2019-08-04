@@ -1,7 +1,7 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 
-module.exports.home = function(request, response) {
+module.exports.home = async function(request, response) {
 
     // response.cookie('user_id', 32);
     // console.log(request.cookies);
@@ -17,24 +17,29 @@ module.exports.home = function(request, response) {
     });*/
 
     // the below function till populate('user') finds all the post and populates user of each post
-    Post.find({})
-        .populate('user')
-        .populate({
-            path: 'comments',
-            populate: {
-                path: 'user'
-            }
-        })
-        .exec(function(error, posts) {
-            User.find({}, function(error, users) {
-                context = {
-                    title: 'Codial | Home Page',
-                    posts: posts,
-                    all_users: users
-                };
-                return response.render('home', context);
+
+    try {
+        let posts = await Post.find({})
+            .populate('user')
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'user'
+                }
             });
 
+        let users = await User.find({});
 
-    });
-    };
+        context = {
+            title: 'Codial | Home Page',
+            posts: posts,
+            all_users: users
+        };
+        return response.render('home', context);
+    }
+    catch (error) {
+        console.log('Error', error);
+        return;
+    }
+
+}
