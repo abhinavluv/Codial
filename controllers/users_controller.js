@@ -60,12 +60,13 @@ module.exports.signin = function(request, response) {
 module.exports.create = function(request, response) {
 //     check whether password and confirm password are equal or not
     if(request.body.password != request.body.retypePassword) {
-        console.log("Passwords do not match...");
+        request.flash('error', 'Passwords do not match!');
         return response.redirect('back');
     }
 
     User.findOne({ email: request.body.email }, function(error, user) {
         if(error) {
+            request.flash('error', 'User not found...');
             console.log('Error in finding User...');
             return;
         }
