@@ -8,11 +8,12 @@ module.exports.createPost = async function(request, response) {
             user: request.user._id
         });
 
+        request.flash('success', 'Post Created...');
         return response.redirect('back');
     }
     catch (error) {
-        console.log('Error', error);
-        return;
+        request.flash('error', error);
+        return response.redirect('back');
     }
 };
 
@@ -27,15 +28,17 @@ module.exports.deletePost = async function(request, response) {
         if(post.user.toString() === request.user.id) {
             post.remove();
             await Comment.deleteMany({ post: request.params.id });
+            request.flash('success', 'Post deleted...');
             return response.redirect('back');
         }
         // user and id didnt match
         else {
+            request.flash('error', 'You cannot delete this post...');
             return response.redirect('back');
         }
     }
     catch (error) {
-        console.log('Error: ', error);
-        return;
+        request.flash('error', error);
+        return response.redirect('back');
     }
 };

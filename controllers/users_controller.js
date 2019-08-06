@@ -20,10 +20,12 @@ module.exports.updateProfile = function(request, response) {
     console.log("Request.body.userName: " + request.body + ' ' + typeof (request.body));
   if(request.user.id === request.params.id) {
       User.findByIdAndUpdate(request.params.id, { $set: { userName: request.body.name, email:  request.body.email } }, function(error, user) {
+          request.flash('success', 'Profile Updated Successfully!');
          return response.redirect('back');
       });
   }
   else {
+      request.flash('error', 'You are not authorised to update the profile...');
       return response.status(401).send('Unauthorised');
   }
 };
@@ -90,10 +92,12 @@ module.exports.create = function(request, response) {
 
 // sign-in functionality & create a session for the user
 module.exports.createSession = function(request, response) {
+    request.flash('success', 'Logged in successfully...');
     return response.redirect('/');
 };
 
 module.exports.destroySession = function(request, response) {
     request.logout();
+    request.flash('success', 'Logged out successfully...');
     return response.redirect('/');
 }
